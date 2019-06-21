@@ -5,14 +5,16 @@ import { getDir } from '../../api/dir'
 const { TreeNode, DirectoryTree } = Tree;
 
 class App extends React.Component {
-  dirs:any = []
+  state: any;
   constructor(props:any) {
     super(props);
-    getDir({
-      
-    }).then(res => {
-      this.dirs = res
+    this.state = {
+      dir: []
+    }
+    getDir().then(res => {
+      this.state.dir = res
     })
+    console.log(this.state)
   }
   onSelect = (keys:any, event:any) => {
     console.log('Trigger Select', keys, event);
@@ -25,6 +27,7 @@ class App extends React.Component {
     return (
       <Row>
         <Col xs={2} sm={4} md={6} lg={8} xl={10}>
+          {this.state.dir}
           <DirectoryTree multiple defaultExpandAll onSelect={this.onSelect} onExpand={this.onExpand}>
             <TreeNode title="parent 0" key="0-0">
               <TreeNode title="leaf 0-0" key="0-0-0" isLeaf />
